@@ -7,7 +7,9 @@ namespace SchoolManagmentSystemRemake.ViewModels
 		public string StudentName { get; set; }
 		public DateTime DOB { get; set; }
 
-		public EducationalLevel EducationalLevel { get; set; }
+        public int EducationalLevelId { get; set; }
+
+        public EducationalLevel EducationalLevel { get; set; }
 
 		public City City { get; set; }
 

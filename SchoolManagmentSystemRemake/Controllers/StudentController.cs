@@ -18,9 +18,13 @@ namespace SchoolManagmentSystemRemake.Controllers
 		//	return View();
 		//}
 
-		public IActionResult Create(string operation)
+		public async Task<IActionResult> Create(string operation)
 		{
 			ViewBag.operation = operation;
+			ViewBag.Cities = _context.Cities.ToList();
+			ViewBag.EducationalLevel = _context.educationalLevels.ToList();
+			ViewBag.Courses = _context.Courses.ToList();
+           
 			return View("StudentForm");
 		}
 		[HttpPost]
@@ -30,8 +34,8 @@ namespace SchoolManagmentSystemRemake.Controllers
 			{
 				StudentName = viewModel.StudentName,
 				DOB = viewModel.DOB,
-				//EducationalLevel = viewModel.EducationalLevel,
-				//City = viewModel.City,
+				EducationalLevel = viewModel.EducationalLevel,
+				City = viewModel.City,
 				//Courses = viewModel.Courses,
 				IsDeleted = false
 			};
@@ -44,17 +48,21 @@ namespace SchoolManagmentSystemRemake.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int Id, string operation)
 		{
-			//get the std by id ,Student
-			ViewBag.operation = operation;
-			return View("StudentForm");
+            //get the std by id ,Student
+            var student = await _context.Students.FindAsync(Id);
+            //get the std by id ,Student
+            ViewBag.operation = operation;
+			return View("StudentForm",student);
 		}
 
 		public async Task<IActionResult> ViewDelete()
 		{
-			var Students = await _context.Students.ToListAsync();
-			return View("Index",Students);
+            var Students = await _context.Students.ToListAsync();
+            //var Students = await _context.Students.Include(x => x.City).ToListAsync();
+            //Students = await _context.Students.Include(x => x.EducationalLevel).ToListAsync();
+            return View("Index",Students);
 		}
-		public async Task<IActionResult> Delete()
+		public async Task<IActionResult> Delete(int Id)
 		{
 			//delete std
 			return View("Index");

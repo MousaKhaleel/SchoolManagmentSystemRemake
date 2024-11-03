@@ -5,78 +5,88 @@
 }
 @model SchoolManagmentSystemRemake.ViewModels.vmStudent
 @{
-    var operation = ViewBag.operation as string;
+	var operation = ViewBag.operation as string;
 }
 
 <div>
-    <div>
-        @{
-            if (operation == "Create")
-            {
-                <div>
-                    <h2>Add a Student</h2>
-                    <form method="post">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" asp-for="StudentName" placeholder="Enter name">
+	<div>
+		@{
+			if (operation == "Create")
+			{
+				<div>
+					<h2>Add a Student</h2>
+					<form method="post">
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" class="form-control" id="name" asp-for="StudentName" placeholder="Enter name">
 
-                            <label for="EducationalLevel">Educational Level</label>
-                            <br />
-                            <select>
-                                <option>--select--</option>
-                            </select>
-                            <br />
-                            <label for="City">City</label>
-                            <br />
-                            <select>
-                                <option>--select--</option>
-                            </select>
-                            <br />
-                            <label for="Courses">Course</label>
-                            <br />
-                            <select>
-                                <option>--select--</option>
-                            </select>
-                            <br />
+							<label for="EducationalLevel">Educational Level</label>
+							<select class="form-control" asp-for="EducationalLevel" asp-items="@(new SelectList(ViewBag.EducationalLevel,"Id","Level"))">
+								<option>
+									---select---
+								</option>
+							</select>
+							<label for="City">City</label>
+							<br />
+							<select asp-for="City" class="form-control" asp-items="@(new SelectList(ViewBag.Cities,"Id","CityName","Students"))">
+								<option>--select--</option>
+							</select>
+							<br />
+							<label for="Courses">Course</label>
+							<br />
+							<select class="form-control">
+								<option>--select--</option>
+							</select>
+							<br />
 
-                            <label for="dob">Date of Birth</label>
-                            <input type="date" class="form-control" id="dob" asp-for="DOB" placeholder="Date of Birth">
-                        </div>
-                        <br />
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-            }
-            else if (operation == "edit")
-            {
-                <div>
-                    <h2>Edit Student</h2>
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter name">
+							<label for="dob">Date of Birth</label>
+							<input type="date" class="form-control" id="dob" asp-for="DOB" placeholder="Date of Birth">
+						</div>
+						<br />
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			}
+			else if (operation == "edit")
+			{
+				<div>
+					<h2>Edit Student</h2>
+					<form>
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" class="form-control" id="name" asp-for="StudentName" placeholder="Enter name">
 
-                            <label for="EducationalLevel">Educational Level</label>
-                            <input type="text" class="form-control" id="EducationalLevel" placeholder="Enter the Educational Level">
+							<label for="EducationalLevel">Educational Level</label>
+							<br />
+							<select class="form-control" asp-for="EducationalLevelId" asp-items="@(new SelectList(ViewBag.EducationalLevel,"Id","Level"))">
+								<option>--select--</option>
+							</select>
+							<br />
+							<label for="City">City</label>
+							<br />
+							<select class="form-control" asp-items="@(new SelectList(ViewBag.Cities,"Id","CityName","Students"))">
+								<option>--select--</option>
+							</select>
+							<br />
+							<label for="Courses">Course</label>
+							<br />
+							<select class="form-control">
+								<option>--select--</option>
+							</select>
+							<br />
 
-                            <label for="City">City</label>
-                            <input type="text" class="form-control" id="City" placeholder="Enter the City">
-
-                            <label for="Courses">Courses</label>
-                            <input type="text" class="form-control" id="Courses" placeholder="Enter your Courses">
-
-                            <label for="dob">Date of Birth</label>
-                            <input type="date" class="form-control" id="dob" placeholder="Date of Birth">
-                        </div>
-                        <br />
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-            }
-            else
-            {
-                <p>Unknown operation</p>
-            }
-        }
-    </div>
+							<label for="dob">Date of Birth</label>
+							<input type="date" class="form-control" id="dob" asp-for="DOB" placeholder="Date of Birth">
+						</div>
+						<br />
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			}
+			else
+			{
+				<p>Unknown operation</p>
+			}
+		}
+	</div>
 </div>
