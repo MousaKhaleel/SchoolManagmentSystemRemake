@@ -1,4 +1,4 @@
-﻿using SchoolManagmentSystem.Models;
+﻿using SchoolManagmentSystemRemake.Models;
 
 namespace SchoolManagmentSystemRemake.ViewModels
 {

@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace SchoolManagmentSystem.Models
+namespace SchoolManagmentSystemRemake.Models
 {
     public class Course
     {
@@ -15,7 +15,7 @@ namespace SchoolManagmentSystem.Models
 
         public DateTime EndDate { get; set; }
 
-        [ForeignKey("Id")]
+        [ForeignKey(nameof(CategoryId))]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
@@ -24,6 +24,7 @@ namespace SchoolManagmentSystem.Models
         public bool IsDeleted { get; set; }
 
         public List<Student> Students { get; set; }
-        public List<Teacher> Teachers { get; set; }
-}
+
+        public List<CourseTeacher> CourseTeachers { get; set; }
+    }
 }

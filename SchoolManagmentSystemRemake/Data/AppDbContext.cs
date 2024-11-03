@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SchoolManagmentSystem.Models;
+using SchoolManagmentSystemRemake.Models;
 
-namespace SchoolManagmentSystem.Data
+namespace SchoolManagmentSystemRemake.Data
 {
     public class AppDbContext : DbContext
     {
@@ -14,5 +14,15 @@ namespace SchoolManagmentSystem.Data
         public DbSet<Major> Majors { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<CourseTeacher> CourseTeachers { get;set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CourseTeacher>()
+                .HasKey(tc => new { tc.TeacherId, tc.CourseId });
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

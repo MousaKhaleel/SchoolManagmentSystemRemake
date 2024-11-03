@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace SchoolManagmentSystem.Models
+namespace SchoolManagmentSystemRemake.Models
 {
     public class Student
     {
@@ -27,6 +27,5 @@ namespace SchoolManagmentSystem.Models
         [ForeignKey(nameof(Course))]
         public int CourseId { get; set; }
         public Course Course { get; set; }
-
-}
+    }
 }

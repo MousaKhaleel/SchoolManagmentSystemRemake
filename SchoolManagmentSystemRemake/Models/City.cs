@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace SchoolManagmentSystem.Models
+namespace SchoolManagmentSystemRemake.Models
 {
     public class City
     {

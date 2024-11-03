@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace SchoolManagmentSystem.Models
+namespace SchoolManagmentSystemRemake.Models
 {
     public class Teacher
     {
@@ -11,7 +11,7 @@ namespace SchoolManagmentSystem.Models
 
         public string TeacherName { get; set; }
 
-        [ForeignKey("Id")]
+        [ForeignKey(nameof(MajorId))]
         public int MajorId { get; set; }
         public Major Major { get; set; }
 
@@ -19,6 +19,6 @@ namespace SchoolManagmentSystem.Models
 
         public bool IsDeleted { get; set; }
 
-        public List<Course> Courses { get; set; }
+        public List<CourseTeacher> CourseTeachers { get; set; }
     }
 }

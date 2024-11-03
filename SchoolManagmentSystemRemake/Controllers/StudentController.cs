@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SchoolManagmentSystem.Data;
-using SchoolManagmentSystem.Models;
+using SchoolManagmentSystemRemake.Data;
+using SchoolManagmentSystemRemake.Models;
 using SchoolManagmentSystemRemake.ViewModels;
 
 namespace SchoolManagmentSystemRemake.Controllers
@@ -13,10 +13,10 @@ namespace SchoolManagmentSystemRemake.Controllers
 		{
 			_context = dbContext;
 		}
-		public IActionResult Index()
-		{
-			return View();
-		}
+		//public IActionResult Index()
+		//{
+		//	return View();
+		//}
 
 		public IActionResult Create(string operation)
 		{
@@ -52,7 +52,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 		public async Task<IActionResult> ViewDelete()
 		{
 			var Students = await _context.Students.ToListAsync();
-			return View(Students);
+			return View("Index",Students);
 		}
 		public async Task<IActionResult> Delete()
 		{

@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SchoolManagmentSystem.Data;
+using SchoolManagmentSystemRemake.Data;
 
 #nullable disable
 
 namespace SchoolManagmentSystemRemake.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241103101956_initial migration")]
+    [Migration("20241103122854_initial migration")]
     partial class initialmigration
     {
         /// <inheritdoc />
@@ -25,22 +25,7 @@ namespace SchoolManagmentSystemRemake.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CourseTeacher", b =>
-                {
-                    b.Property<int>("CoursesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeachersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CoursesId", "TeachersId");
-
-                    b.HasIndex("TeachersId");
-
-                    b.ToTable("CourseTeacher");
-                });
-
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Category", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +42,7 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.City", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +59,7 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Course", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +94,22 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.EducationalLevel", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.CourseTeacher", b =>
+                {
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TeacherId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseTeachers");
+                });
+
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.EducationalLevel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.ToTable("educationalLevels");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Major", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Major", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -143,7 +143,7 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.ToTable("Majors");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Student", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -181,7 +181,7 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Teacher", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,24 +210,9 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("CourseTeacher", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Course", b =>
                 {
-                    b.HasOne("SchoolManagmentSystem.Models.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SchoolManagmentSystem.Models.Teacher", null)
-                        .WithMany()
-                        .HasForeignKey("TeachersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Course", b =>
-                {
-                    b.HasOne("SchoolManagmentSystem.Models.Category", "Category")
+                    b.HasOne("SchoolManagmentSystemRemake.Models.Category", "Category")
                         .WithMany("Courses")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -236,21 +221,40 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Student", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.CourseTeacher", b =>
                 {
-                    b.HasOne("SchoolManagmentSystem.Models.City", "City")
+                    b.HasOne("SchoolManagmentSystemRemake.Models.Course", "Course")
+                        .WithMany("CourseTeachers")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolManagmentSystemRemake.Models.Teacher", "Teacher")
+                        .WithMany("CourseTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Student", b =>
+                {
+                    b.HasOne("SchoolManagmentSystemRemake.Models.City", "City")
                         .WithMany("Students")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolManagmentSystem.Models.Course", "Course")
+                    b.HasOne("SchoolManagmentSystemRemake.Models.Course", "Course")
                         .WithMany("Students")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolManagmentSystem.Models.EducationalLevel", "EducationalLevel")
+                    b.HasOne("SchoolManagmentSystemRemake.Models.EducationalLevel", "EducationalLevel")
                         .WithMany()
                         .HasForeignKey("EducationalLevelId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -263,9 +267,9 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.Navigation("EducationalLevel");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Teacher", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Teacher", b =>
                 {
-                    b.HasOne("SchoolManagmentSystem.Models.Major", "Major")
+                    b.HasOne("SchoolManagmentSystemRemake.Models.Major", "Major")
                         .WithMany()
                         .HasForeignKey("MajorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -274,19 +278,26 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.Navigation("Major");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Category", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Category", b =>
                 {
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.City", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.City", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("SchoolManagmentSystem.Models.Course", b =>
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Course", b =>
                 {
+                    b.Navigation("CourseTeachers");
+
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Teacher", b =>
+                {
+                    b.Navigation("CourseTeachers");
                 });
 #pragma warning restore 612, 618
         }
