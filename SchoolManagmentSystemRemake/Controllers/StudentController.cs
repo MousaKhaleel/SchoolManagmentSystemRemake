@@ -40,14 +40,13 @@ namespace SchoolManagmentSystemRemake.Controllers
                 DOB = viewModel.DOB,
                 EducationalLevelId = viewModel.EducationalLevelId,
                 CityId = viewModel.CityId,
-                //Courses = viewModel.Courses,
+                CourseId = viewModel.CourseId,
                 IsDeleted = false
             };
 
-
             await _context.Students.AddAsync(Student);
             await _context.SaveChangesAsync();
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -68,7 +67,7 @@ namespace SchoolManagmentSystemRemake.Controllers
             student.IsDeleted = true;
             await _context.SaveChangesAsync();
             //delete std
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

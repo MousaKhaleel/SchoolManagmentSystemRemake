@@ -15,20 +15,20 @@
 					<input type="text" class="form-control" id="name" asp-for="StudentName" placeholder="Enter name">
 
 					<label for="EducationalLevel">Educational Level</label>
-					<select class="form-control" asp-for="EducationalLevel" asp-items="@(new SelectList(ViewBag.EducationalLevel,"Id","Level"))">
+					<select class="form-control" asp-for="EducationalLevelId" asp-items="@(new SelectList(ViewBag.EducationalLevel,"Id","Level"))">
 						<option>
 							---select---
 						</option>
 					</select>
 					<label for="City">City</label>
 					<br />
-					<select asp-for="City" class="form-control" asp-items="@(new SelectList(ViewBag.Cities,"Id","CityName","Students"))">
+					<select asp-for="CityId" class="form-control" asp-items="@(new SelectList(ViewBag.Cities,"Id","CityName","Students"))">
 						<option>--select--</option>
 					</select>
 					<br />
 					<label for="Courses">Course</label>
 					<br />
-					<select asp-for="Course" class="form-control" asp-items="@(new SelectList(ViewBag.Courses,"Id","CourseName","Students"))">
+					<select asp-for="CourseId" class="form-control" asp-items="@(new SelectList(ViewBag.Courses,"Id","CourseName","Students"))">
 						<option>--select--</option>
 					</select>
 					<br />

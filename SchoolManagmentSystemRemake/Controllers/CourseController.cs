@@ -29,6 +29,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 
 			return View("CourseForm");
 		}
+		[HttpPost]
 		public async Task<IActionResult> Create(vmCourse viewModel)
 		{
 			var Course = new Course
@@ -41,10 +42,9 @@ namespace SchoolManagmentSystemRemake.Controllers
 				IsDeleted = false
 			};
 
-
 			await _context.Courses.AddAsync(Course);
 			await _context.SaveChangesAsync();
-			return View("Index");
+			return RedirectToAction("Index");
 		}
 		[HttpGet]
 		public IActionResult Edit(int id)
@@ -55,6 +55,12 @@ namespace SchoolManagmentSystemRemake.Controllers
 			ViewBag.Action = "Edit";
 			return View("CourseForm", course);
 		}
+		[HttpPost]
+		public IActionResult Edit(vmCourse viewModel)
+		{
+			//get id and fill new info??
+			return RedirectToAction("Index");
+		}
 		public async Task<IActionResult> Delete(int id)
 		{
 			//delete Course
@@ -62,7 +68,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 			Course.IsDeleted = true;
 			await _context.SaveChangesAsync();
 			//delete Course
-			return View("Index");
+			return RedirectToAction("Index");
 		}
 	}
 }

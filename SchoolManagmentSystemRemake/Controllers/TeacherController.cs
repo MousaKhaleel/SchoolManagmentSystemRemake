@@ -37,9 +37,9 @@ namespace SchoolManagmentSystemRemake.Controllers
 				TeacherName = viewModel.TeacherName,
 				Major = viewModel.Major,
 				PricePerHour = viewModel.PricePerHour,
+
 				IsDeleted = false
 			};
-
 
 			await _context.Teachers.AddAsync(Teacher);
 			await _context.SaveChangesAsync();
@@ -63,7 +63,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 			teacher.IsDeleted = true;
 			await _context.SaveChangesAsync();
 			//delete std
-			return View("Index");
+			return RedirectToAction("Index");
 		}
 	}
 }

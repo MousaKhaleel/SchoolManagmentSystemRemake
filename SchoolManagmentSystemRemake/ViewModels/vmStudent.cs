@@ -16,6 +16,7 @@ namespace SchoolManagmentSystemRemake.ViewModels
 
 		public bool IsDeleted { get; set; }
 
+		public int CourseId { get; set; }
 		public Course Course { get; set; }
 	}
 }
