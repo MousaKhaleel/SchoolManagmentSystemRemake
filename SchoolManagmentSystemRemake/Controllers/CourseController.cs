@@ -50,14 +50,33 @@ namespace SchoolManagmentSystemRemake.Controllers
 		public IActionResult Edit(int id)
 		{
 			//get the std by id ,Course
-			var course = _context.Courses.Where(x => x.Id == id).FirstOrDefault();
+			var courseFind = _context.Courses.Where(x => x.Id == id).FirstOrDefault();
+			vmCourse course = new vmCourse
+			{
+				CourseName = courseFind.CourseName,
+				StartDate = courseFind.StartDate,
+				EndDate = courseFind.EndDate,
+				CategoryId = courseFind.CategoryId,
+				Price = courseFind.Price,
+				IsDeleted = false
+			};
 			//get the std by id ,Course
 			ViewBag.Action = "Edit";
+			ViewBag.Categories = _context.Categories.ToList();
+
 			return View("CourseForm", course);
 		}
 		[HttpPost]
 		public IActionResult Edit(vmCourse viewModel)
 		{
+			var courseFind = _context.Courses.Where(x => x.Id == viewModel.Id).FirstOrDefault();
+				courseFind.CourseName = viewModel.CourseName;
+				courseFind.StartDate = viewModel.StartDate;
+				courseFind.EndDate = viewModel.EndDate;
+				courseFind.CategoryId = viewModel.CategoryId;
+				courseFind.Price = viewModel.Price;
+				courseFind.IsDeleted = false;
+			_context.SaveChangesAsync();
 			//get id and fill new info??
 			return RedirectToAction("Index");
 		}

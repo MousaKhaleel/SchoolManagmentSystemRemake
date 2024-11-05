@@ -4,6 +4,8 @@ namespace SchoolManagmentSystemRemake.ViewModels
 {
 	public class vmStudent
 	{
+		public int Id { get; set; }
+
 		public string StudentName { get; set; }
 		public DateTime DOB { get; set; }
 
