@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SchoolManagmentSystemRemake.ViewModels.vmTeacher
+
+<div>
+	<div>
+		<div>
+			<h2>@ViewBag.Action a Teacher</h2>
+			<form method="post" asp-action="@ViewBag.Action">
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" id="name" asp-for="TeacherName" placeholder="Enter name">
+
+					<label for="Major">Major</label>
+					<select class="form-control" asp-for="Major" asp-items="@(new SelectList(ViewBag.Majors,"Id","MajorName"))">
+						<option>
+							---select---
+						</option>
+					</select>
+					<label for="PricePerHour">Price Per Hour</label>
+					<input type="text" class="form-control" id="PricePerHour" asp-for="PricePerHour" placeholder="Enter Price Per Hour">
+				</div>
+				<br />
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>

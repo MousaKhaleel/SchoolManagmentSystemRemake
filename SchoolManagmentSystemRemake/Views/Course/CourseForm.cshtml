@@ -1,0 +1,35 @@
+﻿@model SchoolManagmentSystemRemake.ViewModels.vmCourse
+
+
+<div class="row">
+	<div class="col-md-6">
+
+		<div>
+			<h2>@ViewBag.Action a Course</h2>
+			<form method="post" asp-action="@ViewBag.Action">
+				<div class="form-group">
+					<label for="name">Course Name</label>
+					<input type="text" class="form-control" id="name" asp-for="CourseName" placeholder="Enter name">
+
+					<label for="Start">Start Date</label>
+					<input type="date" class="form-control" id="Start" asp-for="StartDate" placeholder="Start Date">
+					<br />
+
+					<label for="End">End Date</label>
+					<input type="date" class="form-control" id="End" asp-for="EndDate" placeholder="End Date">
+					<label for="Category">Category</label>
+					<br />
+					<select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories,"Id","CategoryName"))">
+						<option>--select--</option>
+					</select>
+					<br />
+					<label for="name">Course Price</label>
+					<input type="text" class="form-control" id="name" asp-for="Price" placeholder="Enter Price">
+				</div>
+				<br />
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+
+	</div>
+</div>

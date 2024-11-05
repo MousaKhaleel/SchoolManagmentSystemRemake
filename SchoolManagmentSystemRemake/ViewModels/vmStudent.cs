@@ -11,7 +11,8 @@ namespace SchoolManagmentSystemRemake.ViewModels
 
         public EducationalLevel EducationalLevel { get; set; }
 
-		public City City { get; set; }
+        public int CityId { get; set; }
+        public City City { get; set; }
 
 		public bool IsDeleted { get; set; }
 
