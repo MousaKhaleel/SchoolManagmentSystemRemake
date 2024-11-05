@@ -27,7 +27,7 @@ namespace SchoolManagmentSystemRemake.Controllers
             ViewBag.Action = "Create";
             ViewBag.Cities = _context.Cities.ToList();
             ViewBag.EducationalLevel = _context.educationalLevels.ToList();
-            ViewBag.Courses = _context.Courses.ToList();
+            ViewBag.Courses = _context.Courses.Where(c => !c.IsDeleted).ToList();
 
             return View("StudentForm");
         }
