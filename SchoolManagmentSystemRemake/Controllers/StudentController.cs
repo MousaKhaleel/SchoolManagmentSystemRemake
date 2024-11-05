@@ -13,12 +13,15 @@ namespace SchoolManagmentSystemRemake.Controllers
         {
             _context = dbContext;
         }
-        //public IActionResult Index()
-        //{
-        //	return View();
-        //}
+		public async Task<IActionResult> Index()
+		{
+			var Students = await _context.Students.Where(c => !c.IsDeleted).ToListAsync();
+			//var Students = await _context.Students.Include(x => x.City).ToListAsync();
+			//Students = await _context.Students.Include(x => x.EducationalLevel).ToListAsync();
+			return View("Index", Students);
+		}
 
-        [HttpGet]
+		[HttpGet]
         public async Task<IActionResult> Create()
         {
             ViewBag.Action = "Create";
@@ -54,17 +57,10 @@ namespace SchoolManagmentSystemRemake.Controllers
 
             await _context.SaveChangesAsync();
             //get the std by id ,Student
-            ViewBag.operation = "Edit";
+            ViewBag.Action = "Edit";
             return View("StudentForm", student);
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var Students = await _context.Students.Where(c => !c.IsDeleted).ToListAsync();
-            //var Students = await _context.Students.Include(x => x.City).ToListAsync();
-            //Students = await _context.Students.Include(x => x.EducationalLevel).ToListAsync();
-            return View("Index", Students);
-        }
         public async Task<IActionResult> Delete(int id)
         {
             //delete std

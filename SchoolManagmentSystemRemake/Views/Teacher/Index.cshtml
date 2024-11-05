@@ -7,16 +7,6 @@
 @model List<SchoolManagmentSystemRemake.Models.Teacher>
 
 
-<script>
-	function confirmDelete(event, Id) {
-		event.preventDefault();
-		if (confirm("Are you sure you want to delete this item?")) {
-			window.location.href = '@Url.Action("Delete", "Teacher", new { Id = "Id" })'.replace("Id", Id)
-		}
-	}
-</script>
-
-
 <div>
 	<div>
 		<a class="btn btn-primary" asp-action="Create">Add a Teacher</a>
@@ -46,7 +36,7 @@
 							<a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<a onclick="confirmDelete(event) asp-action="Delete" asp-route-id="@teacher.Id" class="btn btn-danger">Delete</a>
+							<a asp-action="Delete" asp-route-id="@teacher.Id" class="btn btn-danger">Delete</a>
 
 						</td>
 					</tr>

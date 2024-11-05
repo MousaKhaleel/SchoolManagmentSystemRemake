@@ -4,21 +4,7 @@
 @{
 }
 
-@{
-	var operation = ViewBag.operation as string;
-}
-
 @model List<SchoolManagmentSystemRemake.Models.Student>
-
-
-<script>
-	function confirmDelete(event, Id) {
-		event.preventDefault();
-		if (confirm("Are you sure you want to delete this item?")) {
-			window.location.href = '@Url.Action("Delete", "Student", new { Id = "Id" })'.replace("Id", Id)
-		}
-	}
-</script>
 
 
 <div>
@@ -54,7 +40,7 @@
 							<a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<a onclick="confirmDelete(event) asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Delete</a>
+							<a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-danger">Delete</a>
 
 						</td>
 					</tr>
