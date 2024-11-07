@@ -75,7 +75,10 @@ namespace SchoolManagmentSystemRemake.Controllers
 				TeacherName = teacherFind.TeacherName,
 				MajorId = teacherFind.MajorId,
 				PricePerHour = teacherFind.PricePerHour,
-				CourseTeachers = teacherFind.CourseTeachers,
+				SelectedCourseIds = _context.CourseTeachers
+									.Where(x => x.TeacherId == id)
+									.Select(ct => ct.CourseId)
+									.ToList(),
 				IsDeleted = false,
 			};
 			await _context.SaveChangesAsync();
@@ -83,7 +86,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 			ViewBag.Action = "Edit";
 			ViewBag.Majors = _context.Majors.ToList();
 			ViewBag.Courses = _context.Courses.Where(x => !x.IsDeleted).ToList();
-			ViewBag.selectedCourseIds = _context.CourseTeachers.Where(x => x.TeacherId == id).Select(ct => ct.CourseId).ToList();
+			//ViewBag.selectedCourseIds = _context.CourseTeachers.Where(x => x.TeacherId == id).Select(ct => ct.CourseId).ToList();
 			return View("TeacherForm", teacher);
 		}
 		[HttpPost]

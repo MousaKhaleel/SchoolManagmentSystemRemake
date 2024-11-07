@@ -23,7 +23,8 @@
 					<label for="PricePerHour">Price Per Hour</label>
 					<input type="text" class="form-control" id="PricePerHour" asp-for="PricePerHour" placeholder="Enter Price Per Hour">
 					<label for="Courses">Courses</label>
-					<select multiple class="form-control" asp-for="SelectedCourseIds" asp-items="@(new SelectList(ViewBag.Courses,"Id","CourseName"))">
+					<select multiple class="form-control" asp-for="SelectedCourseIds"
+							asp-items="@(new SelectList(ViewBag.Courses, "Id", "CourseName"))">
 						<option>
 							---select---
 						</option>
