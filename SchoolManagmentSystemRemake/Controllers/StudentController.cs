@@ -18,6 +18,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 			var Students = await _context.Students.Where(c => !c.IsDeleted).ToListAsync();
 			//var Students = await _context.Students.Include(x => x.City).ToListAsync();
 			//Students = await _context.Students.Include(x => x.EducationalLevel).ToListAsync();
+			ViewBag.Action = "All";
 			return View("Index", Students);
 		}
 
@@ -87,11 +88,25 @@ namespace SchoolManagmentSystemRemake.Controllers
 
 		public async Task<IActionResult> Delete(int id)
 		{
-			//delete std
 			var student = await _context.Students.FindAsync(id);
 			student.IsDeleted = true;
 			await _context.SaveChangesAsync();
-			//delete std
+			return RedirectToAction("Index");
+		}
+		public async Task<IActionResult> RetrieveDeleted()
+		{
+			var Students = await _context.Students.Where(c => c.IsDeleted).ToListAsync();
+			ViewBag.Action="Deleted";
+			return View("Index", Students);
+		}
+		public IActionResult DeletePermanent(int id)
+		{
+			var student = _context.Students.Find(id);
+			if (student.IsDeleted == true)
+			{
+				_context.Students.Remove(student);
+			}
+			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
 	}

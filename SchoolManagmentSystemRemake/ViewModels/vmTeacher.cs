@@ -15,7 +15,7 @@ namespace SchoolManagmentSystemRemake.ViewModels
 		public string PricePerHour { get; set; }
 
 		public bool IsDeleted { get; set; }
-
-		//public List<CourseTeacher> CourseTeachers { get; set; }
+		public List<int> SelectedCourseIds { get; set; } = new List<int>();
+		public List<CourseTeacher> CourseTeachers { get; set; }
 	}
 }

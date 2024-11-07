@@ -2,6 +2,11 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+	string deleteType;
+	if (ViewBag.Action == "Deleted")
+		deleteType = "DeletePermanent";
+	else
+		deleteType = "Delete";
 }
 
 @model List<SchoolManagmentSystemRemake.Models.Course>
@@ -10,6 +15,7 @@
 <div>
 	<div>
 		<a asp-action="Create" class="btn btn-primary">Add a Course</a>
+		<a class="btn btn-warning" asp-action="RetrieveDeleted">View deleted Records</a>
 	</div>
 	<div>
 		<h2>Courses List</h2>
@@ -30,7 +36,7 @@
 				@foreach (var course in Model)
 				{
 					<tr>
-						<th scope="row">1</th>
+						<th scope="row">@course.Id</th>
 						<td>@course.CourseName</td>
 						<td>@course.StartDate</td>
 						<td>@course.EndDate</td>
@@ -40,7 +46,7 @@
 							<a asp-route-id="@course.Id" asp-action="Edit" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<a asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger">Delete</a>
+							<a asp-action="@deleteType" asp-route-id="@course.Id" class="btn btn-danger">Delete</a>
 
 						</td>
 					</tr>
