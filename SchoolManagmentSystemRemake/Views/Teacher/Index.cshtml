@@ -44,7 +44,7 @@
 							<a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<a asp-action="AssignCourse" asp-route-id="@teacher.Id" class="btn btn-secondary">Assign Course</a>
+							<button class="btn btn-secondary" onclick="showAssignModal('@Url.Action("AssignCourses", "Teacher", new { id = teacher.Id })')">Assign Courses</button>
 						</td>
 						<td>
 							<button class="btn btn-danger" onclick="showDeleteModal('@Url.Action(deleteType, new { id = teacher.Id })')">Delete</button>
@@ -63,3 +63,4 @@
 </div>
 
 @await Html.PartialAsync("_DeleteConfirmationModal")
+@await Html.PartialAsync("_AssignCoursesModal")

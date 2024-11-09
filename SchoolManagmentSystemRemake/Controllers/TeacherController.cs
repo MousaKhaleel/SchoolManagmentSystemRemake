@@ -158,5 +158,55 @@ namespace SchoolManagmentSystemRemake.Controllers
 			await _context.SaveChangesAsync();
 			return RedirectToAction("Index");
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> AssignCourses(int id)
+		{
+			var teacherFind = await _context.Teachers.FindAsync(id);
+			vmTeacher assignToTeacher = new vmTeacher
+			{
+				Id = id,
+				TeacherName = teacherFind.TeacherName,
+				MajorId = teacherFind.MajorId,
+				PricePerHour = teacherFind.PricePerHour,
+				SelectedCourseIds = _context.CourseTeachers
+									.Where(x => x.TeacherId == id)
+									.Select(ct => ct.CourseId)
+									.ToList(),
+				IsDeleted = false,
+			};
+			//await _context.SaveChangesAsync();
+			ViewBag.Courses = _context.Courses.Where(x => !x.IsDeleted).ToList();
+			return PartialView("_AssignCoursesModal", assignToTeacher);
+		}
+		[HttpPost]
+		public IActionResult AssignCourses(vmTeacher viewModel)
+		{
+			var teacherFind = _context.Teachers.Where(x => x.Id == viewModel.Id).FirstOrDefault();
+			//teacherFind.TeacherName = viewModel.TeacherName;
+			//teacherFind.MajorId = viewModel.MajorId;
+			//teacherFind.PricePerHour = viewModel.PricePerHour;
+			//teacherFind.IsDeleted = false;
+			var teacherRecords = _context.CourseTeachers.Where(x => x.TeacherId == teacherFind.Id);
+			_context.CourseTeachers.RemoveRange(teacherRecords);
+			_context.SaveChanges();
+			List<int> coursesIds = new List<int>();
+			for (int i = 0; i < viewModel.SelectedCourseIds.Count; i++)
+			{
+				coursesIds.Add(viewModel.SelectedCourseIds[i]);
+			}
+			for (int i = 0; i < coursesIds.Count; i++)
+			{
+				var CourseTeacher = new CourseTeacher
+				{
+					CourseId = coursesIds[i],
+					TeacherId = teacherFind.Id,
+				};
+				_context.CourseTeachers.AddAsync(CourseTeacher);
+			}
+			_context.SaveChangesAsync();
+			return RedirectToAction("Index");
+		}
+
 	}
 }

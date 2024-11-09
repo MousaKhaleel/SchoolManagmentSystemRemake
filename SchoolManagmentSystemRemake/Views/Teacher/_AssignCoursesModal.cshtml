@@ -3,3 +3,30 @@
 *@
 @{
 }
+@model SchoolManagmentSystemRemake.ViewModels.vmTeacher
+<div class="modal-header">
+	<h5 class="modal-title">Assign Courses for @Model.TeacherName</h5>
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<div class="modal-body">
+	<form asp-action="AssignCourses" method="post">
+		<input type="hidden" asp-for="Id" />
+		@foreach (var course in ViewBag.Courses)
+		{
+			<div class="form-check">
+				<input type="checkbox" class="form-check-input" name="SelectedCourseIds" value="@course.Id"
+				@(Model.SelectedCourseIds.Contains(course.Id) ? "checked" : "") />
+				<label class="form-check-label">@course.CourseName</label>
+			</div>
+		}
+		<button type="submit" class="btn btn-primary mt-3">Save</button>
+	</form>
+</div>
+<script>
+	let assignUrl = '';
+	function showAssignModal(url) {
+		$('#modalContent').load(url, function () {
+			$('#assignModal').modal('show');
+		});
+	}
+</script>
