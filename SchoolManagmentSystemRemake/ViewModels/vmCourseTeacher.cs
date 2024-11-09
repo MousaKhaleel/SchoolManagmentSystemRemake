@@ -10,3 +10,4 @@ namespace SchoolManagmentSystemRemake.ViewModels
 		public Course Course { get; set; }
 	}
 }
+//TODO: Remove?
