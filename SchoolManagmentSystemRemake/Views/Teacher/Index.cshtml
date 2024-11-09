@@ -28,6 +28,7 @@
 					<th scope="col">Price Per Hour</th>
 					<th scope="col">Edit</th>
 					<th scope="col">Delete</th>
+					<th scope="col" hidden="@((deleteType == "DeletePermanent") ? "true" : "false")">Restore</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,7 +44,9 @@
 						</td>
 						<td>
 							<a asp-action="@deleteType" asp-route-id="@teacher.Id" class="btn btn-danger">Delete</a>
-
+						</td>
+						<td>
+							<a asp-action="RestoreDeleted" hidden="@((teacher.IsDeleted) ? "true" : "false")" asp-route-id="@teacher.Id" class="btn btn-success">Restore</a>
 						</td>
 					</tr>
 				}
