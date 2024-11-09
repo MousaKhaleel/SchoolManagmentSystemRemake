@@ -109,5 +109,12 @@ namespace SchoolManagmentSystemRemake.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
+		public async Task<IActionResult> RestoreDeleted(int id)
+		{
+			var Student = await _context.Students.FindAsync(id);
+			Student.IsDeleted = false;
+			await _context.SaveChangesAsync();
+			return RedirectToAction("Index");
+		}
 	}
 }

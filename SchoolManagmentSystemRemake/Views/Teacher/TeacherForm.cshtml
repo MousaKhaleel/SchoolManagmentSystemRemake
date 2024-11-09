@@ -22,15 +22,18 @@
 					</select>
 					<label for="PricePerHour">Price Per Hour</label>
 					<input type="text" class="form-control" id="PricePerHour" asp-for="PricePerHour" placeholder="Enter Price Per Hour">
+
 					<label for="Courses">Courses</label>
-					<select multiple class="form-control" asp-for="SelectedCourseIds"
-							asp-items="@(new SelectList(ViewBag.Courses, "Id", "CourseName"))">
-						<option>
-							---select---
-						</option>
-					</select>
-
-
+					<div>
+						@foreach (var course in ViewBag.Courses)
+						{
+							<div class="form-check">
+								<input type="checkbox" class="form-check-input" name="SelectedCourseIds" value="@course.Id"
+								@(Model.SelectedCourseIds.Contains(course.Id) ? "checked" : "") />
+								<label class="form-check-label" for="@course.Id">@course.CourseName</label>
+							</div>
+						}
+					</div>
 
 
 				</div>

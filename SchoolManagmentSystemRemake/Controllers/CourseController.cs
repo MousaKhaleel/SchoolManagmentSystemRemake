@@ -89,5 +89,28 @@ namespace SchoolManagmentSystemRemake.Controllers
 			//delete Course
 			return RedirectToAction("Index");
 		}
+		public async Task<IActionResult> RetrieveDeleted()
+		{
+			var Courses = await _context.Courses.Where(c => c.IsDeleted).ToListAsync();
+			ViewBag.Action = "Deleted";
+			return View("Index", Courses);
+		}
+		public IActionResult DeletePermanent(int id)
+		{
+			var course = _context.Courses.Find(id);
+			if (course.IsDeleted == true)
+			{
+				_context.Courses.Remove(course);
+			}
+			_context.SaveChanges();
+			return RedirectToAction("Index");
+		}
+		public async Task<IActionResult> RestoreDeleted(int id)
+		{
+			var Course = await _context.Courses.FindAsync(id);
+			Course.IsDeleted = false;
+			await _context.SaveChangesAsync();
+			return RedirectToAction("Index");
+		}
 	}
 }

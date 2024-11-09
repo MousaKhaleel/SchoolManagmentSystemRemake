@@ -27,8 +27,9 @@
 					<th scope="col">Major</th>
 					<th scope="col">Price Per Hour</th>
 					<th scope="col">Edit</th>
+					<th scope="col">Assign Course</th>
 					<th scope="col">Delete</th>
-					<th scope="col" hidden="@((deleteType == "DeletePermanent") ? "true" : "false")">Restore</th>
+					<th scope="col" hidden="@(deleteType=="DeletePermanent" ? "" : "hidden")">Restore</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,10 +44,16 @@
 							<a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<a asp-action="@deleteType" asp-route-id="@teacher.Id" class="btn btn-danger">Delete</a>
+							<a asp-action="AssignCourse" asp-route-id="@teacher.Id" class="btn btn-secondary">Assign Course</a>
 						</td>
 						<td>
-							<a asp-action="RestoreDeleted" hidden="@((teacher.IsDeleted) ? "true" : "false")" asp-route-id="@teacher.Id" class="btn btn-success">Restore</a>
+							<button class="btn btn-danger" onclick="showDeleteModal('@Url.Action(deleteType, new { id = teacher.Id })')">Delete</button>
+						</td>
+						<td>
+							@if (teacher.IsDeleted && deleteType == "DeletePermanent")
+							{
+								<a asp-action="RestoreDeleted" asp-route-id="@teacher.Id" class="btn btn-success">Restore</a>
+							}
 						</td>
 					</tr>
 				}

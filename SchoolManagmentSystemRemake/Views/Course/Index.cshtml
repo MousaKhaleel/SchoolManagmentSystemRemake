@@ -30,6 +30,8 @@
 					<th scope="col">Price</th>
 					<th scope="col">Edit</th>
 					<th scope="col">Delete</th>
+					<th scope="col" hidden="@(deleteType=="DeletePermanent" ? "" : "hidden")">Restore</th>
+
 				</tr>
 			</thead>
 			<tbody>
@@ -46,8 +48,13 @@
 							<a asp-route-id="@course.Id" asp-action="Edit" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<a asp-action="@deleteType" asp-route-id="@course.Id" class="btn btn-danger">Delete</a>
-
+							<button class="btn btn-danger" onclick="showDeleteModal('@Url.Action(deleteType, new { id = course.Id })')">Delete</button>
+						</td>
+						<td>
+							@if (course.IsDeleted && deleteType == "DeletePermanent")
+							{
+								<a asp-action="RestoreDeleted" asp-route-id="@course.Id" class="btn btn-success">Restore</a>
+							}
 						</td>
 					</tr>
 				}
@@ -55,3 +62,5 @@
 		</table>
 	</div>
 </div>
+
+@await Html.PartialAsync("_DeleteConfirmationModal")

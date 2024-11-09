@@ -146,5 +146,17 @@ namespace SchoolManagmentSystemRemake.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
+		//public IActionResult AssignCourse()
+		//{
+		//TODO: same as edit but with model
+		//	return PartialView();
+		//}
+		public async Task<IActionResult> RestoreDeleted(int id)
+		{
+			var Teacher = await _context.Teachers.FindAsync(id);
+			Teacher.IsDeleted = false;
+			await _context.SaveChangesAsync();
+			return RedirectToAction("Index");
+		}
 	}
 }
