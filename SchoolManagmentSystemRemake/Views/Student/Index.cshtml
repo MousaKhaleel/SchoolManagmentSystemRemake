@@ -13,7 +13,7 @@
 
 
 <div>
-	<div class="align-content-md-between">
+	<div class="justify-content-md-between" style="display: flex;">
 		<a class="btn btn-primary" asp-action="Create">Add a Record</a>
 		<a class="btn btn-warning" asp-action="RetrieveDeleted">View deleted Records</a>
 	</div>
@@ -41,9 +41,9 @@
 						<th scope="row">@student.Id</th>
 						<td>@student.StudentName</td>
 						<td>@student.DOB</td>
-						<td>@student.EducationalLevel</td>
-						<td>@student.City</td>
-						<td>@student.Course</td>
+						<td>@student.EducationalLevel.Level</td>
+						<td>@student.City.CityName</td>
+						<td>@student.Course.CourseName</td>
 						<td>
 							<a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-info">Edit</a>
 						</td>
