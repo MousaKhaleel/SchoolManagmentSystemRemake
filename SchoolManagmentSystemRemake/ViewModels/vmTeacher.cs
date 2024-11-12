@@ -13,9 +13,10 @@ namespace SchoolManagmentSystemRemake.ViewModels
 		public Major Major { get; set; }
 
 		public string PricePerHour { get; set; }
-
+		//List<int> StudentsIds { get; set; }
+		//List<Student> Students { get; set; }
 		public bool IsDeleted { get; set; }
-		public List<int> SelectedCourseIds { get; set; }
+		public List<int>? SelectedCourseIds { get; set; }
 		public List<CourseTeacher> CourseTeachers { get; set; }
 	}
 }

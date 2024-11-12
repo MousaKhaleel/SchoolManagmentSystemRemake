@@ -28,6 +28,7 @@
 					<th scope="col">Educational Level</th>
 					<th scope="col">City</th>
 					<th scope="col">Courses</th>
+					<th scope="col">Teacher</th>
 					<th scope="col">Edit</th>
 					<th scope="col">Delete</th>
 					<th scope="col" hidden="@(deleteType=="DeletePermanent" ? "" : "hidden")">Restore</th>
@@ -44,6 +45,7 @@
 						<td>@student.EducationalLevel.Level</td>
 						<td>@student.City.CityName</td>
 						<td>@student.Course.CourseName</td>
+						<td>@student.Teacher.TeacherName</td>
 						<td>
 							<a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-info">Edit</a>
 						</td>

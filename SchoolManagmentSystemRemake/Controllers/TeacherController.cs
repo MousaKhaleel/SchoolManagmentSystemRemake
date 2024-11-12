@@ -26,7 +26,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 		{
 			ViewBag.Action = "Create";
 			ViewBag.Majors = _context.Majors.ToList();
-			ViewBag.Courses = _context.Courses.Where(x => !x.IsDeleted).ToList();
+			ViewBag.Courses = await _context.Courses.Where(x => !x.IsDeleted).ToListAsync();
 
 			return View("TeacherForm");
 		}
@@ -44,24 +44,25 @@ namespace SchoolManagmentSystemRemake.Controllers
 			await _context.Teachers.AddAsync(Teacher);
 			await _context.SaveChangesAsync();
 			int generatedId = Teacher.Id;
-
-			List<int> coursesIds = new List<int>();
-			for (int i = 0; i < viewModel.SelectedCourseIds.Count; i++)
-			{
-				coursesIds.Add(viewModel.SelectedCourseIds[i]);
-			}
-			for (int i = 0; i < coursesIds.Count; i++)
-			{
-				var CourseTeacher = new CourseTeacher
+			//if (viewModel.SelectedCourseIds != null && viewModel.SelectedCourseIds.Any())
+			//{
+				List<int> coursesIds = new List<int>();
+				for (int i = 0; i < viewModel.SelectedCourseIds.Count; i++)
 				{
-					CourseId = coursesIds[i],
-					TeacherId = generatedId,
-				};
-				await _context.CourseTeachers.AddAsync(CourseTeacher);
-			}
+					coursesIds.Add(viewModel.SelectedCourseIds[i]);
+				}
+				for (int i = 0; i < coursesIds.Count; i++)
+				{
+					var CourseTeacher = new CourseTeacher
+					{
+						CourseId = coursesIds[i],
+						TeacherId = generatedId,
+					};
+					await _context.CourseTeachers.AddAsync(CourseTeacher);
+				}
 
-			await _context.SaveChangesAsync();
-
+				await _context.SaveChangesAsync();
+			//}
 
 			return RedirectToAction("Index");
 		}
