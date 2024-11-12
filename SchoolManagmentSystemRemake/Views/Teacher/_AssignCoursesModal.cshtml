@@ -4,6 +4,14 @@
 @{
 }
 @model SchoolManagmentSystemRemake.ViewModels.vmTeacher
+
+<head>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/SchoolManagmentSystemRemake.styles.css" asp-append-version="true" />
+</head>
+
+<div class="container mt-5" style="max-width: 600px;">
 <div class="modal-header">
 	<h5 class="modal-title">Assign Courses for @Model.TeacherName</h5>
 	<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -21,6 +29,7 @@
 		}
 		<button type="submit" class="btn btn-primary mt-3">Save</button>
 	</form>
+</div>
 </div>
 <script>
 	let assignUrl = '';
