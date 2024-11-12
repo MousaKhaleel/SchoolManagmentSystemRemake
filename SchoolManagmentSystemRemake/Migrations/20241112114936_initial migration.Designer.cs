@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolManagmentSystemRemake.Data;
 
@@ -11,9 +12,11 @@ using SchoolManagmentSystemRemake.Data;
 namespace SchoolManagmentSystemRemake.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241112114936_initial migration")]
+    partial class initialmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,9 +170,6 @@ namespace SchoolManagmentSystemRemake.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -177,8 +177,6 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.HasIndex("CourseId");
 
                     b.HasIndex("EducationalLevelId");
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Students");
                 });
@@ -199,9 +197,6 @@ namespace SchoolManagmentSystemRemake.Migrations
 
                     b.Property<string>("PricePerHour")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentsIds")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeacherName")
@@ -265,19 +260,11 @@ namespace SchoolManagmentSystemRemake.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolManagmentSystemRemake.Models.Teacher", "Teacher")
-                        .WithMany("Students")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("City");
 
                     b.Navigation("Course");
 
                     b.Navigation("EducationalLevel");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Teacher", b =>
@@ -311,8 +298,6 @@ namespace SchoolManagmentSystemRemake.Migrations
             modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Teacher", b =>
                 {
                     b.Navigation("CourseTeachers");
-
-                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

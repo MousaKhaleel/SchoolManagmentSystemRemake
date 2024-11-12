@@ -15,7 +15,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
-			var Students = await _context.Students.Where(c => !c.IsDeleted).Include(x=>x.EducationalLevel).Include(y=>y.City).Include(z=>z.Course).ToListAsync();
+			var Students = await _context.Students.Where(c => !c.IsDeleted).Include(x=>x.EducationalLevel).Include(y=>y.City).Include(z=>z.Course).Include(t=>t.Teacher).ToListAsync();
 			//var Students = await _context.Students.Include(x => x.City).ToListAsync();
 			//Students = await _context.Students.Include(x => x.EducationalLevel).ToListAsync();
 			ViewBag.Action = "All";
@@ -42,12 +42,28 @@ namespace SchoolManagmentSystemRemake.Controllers
 				EducationalLevelId = viewModel.EducationalLevelId,
 				CityId = viewModel.CityId,
 				CourseId = viewModel.CourseId,
+				TeacherId = viewModel.TeacherId,
 				IsDeleted = false
 			};
 
-			await _context.Students.AddAsync(Student);
+            await _context.Students.AddAsync(Student);
 			await _context.SaveChangesAsync();
 			return RedirectToAction("Index");
+		}
+		[HttpGet]
+		public IActionResult GetTeachersByCourse(int courseId)
+		{
+			var teacherIds = _context.CourseTeachers
+									 .Where(x => x.CourseId == courseId)
+									 .Select(x => x.TeacherId)
+									 .ToList();
+
+			var teachers = _context.Teachers
+								   .Where(y => teacherIds.Contains(y.Id))
+								   .Select(y => new { y.Id, y.TeacherName })
+								   .ToList();
+
+			return Json(teachers);
 		}
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
@@ -95,7 +111,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 		}
 		public async Task<IActionResult> RetrieveDeleted()
 		{
-			var Students = await _context.Students.Where(c => c.IsDeleted).Include(x => x.EducationalLevel).Include(y => y.City).Include(z => z.Course).ToListAsync();
+			var Students = await _context.Students.Where(c => c.IsDeleted).Include(x => x.EducationalLevel).Include(y => y.City).Include(z => z.Course).Include(t => t.Teacher).ToListAsync();
 			ViewBag.Action="Deleted";
 			return View("Index", Students);
 		}

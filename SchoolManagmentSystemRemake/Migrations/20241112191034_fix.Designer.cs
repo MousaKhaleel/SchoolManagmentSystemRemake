@@ -12,8 +12,8 @@ using SchoolManagmentSystemRemake.Data;
 namespace SchoolManagmentSystemRemake.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241103122854_initial migration")]
-    partial class initialmigration
+    [Migration("20241112191034_fix")]
+    partial class fix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,9 @@ namespace SchoolManagmentSystemRemake.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
@@ -177,6 +180,8 @@ namespace SchoolManagmentSystemRemake.Migrations
                     b.HasIndex("CourseId");
 
                     b.HasIndex("EducationalLevelId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Students");
                 });
@@ -197,6 +202,9 @@ namespace SchoolManagmentSystemRemake.Migrations
 
                     b.Property<string>("PricePerHour")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentsIds")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeacherName")
@@ -260,11 +268,19 @@ namespace SchoolManagmentSystemRemake.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SchoolManagmentSystemRemake.Models.Teacher", "Teacher")
+                        .WithMany("Students")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("City");
 
                     b.Navigation("Course");
 
                     b.Navigation("EducationalLevel");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Teacher", b =>
@@ -298,6 +314,8 @@ namespace SchoolManagmentSystemRemake.Migrations
             modelBuilder.Entity("SchoolManagmentSystemRemake.Models.Teacher", b =>
                 {
                     b.Navigation("CourseTeachers");
+
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,39 +6,62 @@
 @model SchoolManagmentSystemRemake.ViewModels.vmStudent
 
 <div class="row justify-content-center">
-	<div class="col-md-6">
-		<div>
-			<h2>@ViewBag.Action a Student</h2>
-			<form method="post" asp-action="@ViewBag.Action">
-				<div class="form-group">
-					<label for="name">Name</label>
-					<input type="text" class="form-control" id="name" asp-for="StudentName" placeholder="Enter name">
+    <div class="col-md-6">
+        <div>
+            <h2>@ViewBag.Action a Student</h2>
+            <form method="post" asp-action="@ViewBag.Action">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" asp-for="StudentName" placeholder="Enter name">
 
-					<label for="EducationalLevel">Educational Level</label>
-					<select class="form-control" asp-for="EducationalLevelId" asp-items="@(new SelectList(ViewBag.EducationalLevel,"Id","Level"))">
-						<option>
-							---select---
-						</option>
-					</select>
-					<label for="City">City</label>
-					<br />
-					<select asp-for="CityId" class="form-control" asp-items="@(new SelectList(ViewBag.Cities,"Id","CityName","Students"))">
-						<option>--select--</option>
-					</select>
-					<br />
-					<label for="Courses">Course</label>
-					<br />
-					<select asp-for="CourseId" class="form-control" asp-items="@(new SelectList(ViewBag.Courses,"Id","CourseName","Students"))">
-						<option>--select--</option>
-					</select>
-					<br />
+                    <label for="EducationalLevel">Educational Level</label>
+                    <select class="form-control" asp-for="EducationalLevelId" asp-items="@(new SelectList(ViewBag.EducationalLevel,"Id","Level"))">
+                        <option>---select---</option>
+                    </select>
 
-					<label for="dob">Date of Birth</label>
-					<input type="date" class="form-control" id="dob" asp-for="DOB" placeholder="Date of Birth">
-				</div>
-				<br />
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
-		</div>
-	</div>
+                    <label for="City">City</label>
+                    <select asp-for="CityId" class="form-control" asp-items="@(new SelectList(ViewBag.Cities,"Id","CityName"))">
+                        <option>--select--</option>
+                    </select>
+
+                    <label for="Courses">Course</label>
+                    <select id="course-select" asp-for="CourseId" class="form-control" asp-items="@(new SelectList(ViewBag.Courses,"Id","CourseName"))">
+                        <option>--select--</option>
+                    </select>
+
+                    <label for="Teachers">Teacher</label>
+                    <select id="teacher-select" class="form-control" asp-for="TeacherId">
+                        <option>--select--</option>
+                    </select>
+
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" asp-for="DOB" placeholder="Date of Birth">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.getElementById('course-select').addEventListener('change', function () {
+        var courseId = this.value;
+        var teacherSelect = document.getElementById('teacher-select');
+
+        teacherSelect.innerHTML = '<option>--select--</option>';
+
+        if (courseId) {
+            fetch(`/Student/GetTeachersByCourse?courseId=${courseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(teacher => {
+                        var option = document.createElement('option');
+                        option.value = teacher.id;
+                        option.textContent = teacher.teacherName;
+                        teacherSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching teachers:', error));
+        }
+    });
+</script>

@@ -22,6 +22,9 @@ namespace SchoolManagmentSystemRemake.Models
         public int CityId { get; set; }
         public City City { get; set; }
 
+        [ForeignKey(nameof(TeacherId))]
+        public int TeacherId { get; set; }
+        public Teacher Teacher { get; set; }
         public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(Course))]
