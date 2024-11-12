@@ -13,7 +13,7 @@
 
 
 <div>
-	<div>
+	<div class="justify-content-md-between" style="display: flex;">
 		<a asp-action="Create" class="btn btn-primary">Add a Course</a>
 		<a class="btn btn-warning" asp-action="RetrieveDeleted">View deleted Records</a>
 	</div>
@@ -42,7 +42,7 @@
 						<td>@course.CourseName</td>
 						<td>@course.StartDate</td>
 						<td>@course.EndDate</td>
-						<td>@course.Category</td>
+						<td>@course.Category.CategoryName</td>
 						<td>@course.Price</td>
 						<td>
 							<a asp-route-id="@course.Id" asp-action="Edit" class="btn btn-info">Edit</a>

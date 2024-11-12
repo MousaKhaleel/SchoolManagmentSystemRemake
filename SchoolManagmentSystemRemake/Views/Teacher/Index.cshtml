@@ -13,7 +13,7 @@
 
 
 <div>
-	<div>
+	<div class="justify-content-md-between" style="display: flex;">
 		<a class="btn btn-primary" asp-action="Create">Add a Teacher</a>
 		<a class="btn btn-warning" asp-action="RetrieveDeleted">View deleted Records</a>
 	</div>
@@ -38,13 +38,13 @@
 					<tr>
 						<th scope="row">@teacher.Id</th>
 						<td>@teacher.TeacherName</td>
-						<td>@teacher.Major</td>
+						<td>@teacher.Major.MajorName</td>
 						<td>@teacher.PricePerHour</td>
 						<td>
 							<a asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-info">Edit</a>
 						</td>
 						<td>
-							<a asp-action="AssignCourse" asp-route-id="@teacher.Id" class="btn btn-secondary">Assign Course</a>
+							<a class="btn btn-secondary" asp-route-id="@teacher.Id" asp-action="AssignCourses">Assign Courses</a>
 						</td>
 						<td>
 							<button class="btn btn-danger" onclick="showDeleteModal('@Url.Action(deleteType, new { id = teacher.Id })')">Delete</button>
@@ -61,5 +61,4 @@
 		</table>
 	</div>
 </div>
-
 @await Html.PartialAsync("_DeleteConfirmationModal")

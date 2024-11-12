@@ -15,7 +15,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
-			var Students = await _context.Students.Where(c => !c.IsDeleted).ToListAsync();
+			var Students = await _context.Students.Where(c => !c.IsDeleted).Include(x=>x.EducationalLevel).Include(y=>y.City).Include(z=>z.Course).ToListAsync();
 			//var Students = await _context.Students.Include(x => x.City).ToListAsync();
 			//Students = await _context.Students.Include(x => x.EducationalLevel).ToListAsync();
 			ViewBag.Action = "All";
@@ -95,7 +95,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 		}
 		public async Task<IActionResult> RetrieveDeleted()
 		{
-			var Students = await _context.Students.Where(c => c.IsDeleted).ToListAsync();
+			var Students = await _context.Students.Where(c => c.IsDeleted).Include(x => x.EducationalLevel).Include(y => y.City).Include(z => z.Course).ToListAsync();
 			ViewBag.Action="Deleted";
 			return View("Index", Students);
 		}
