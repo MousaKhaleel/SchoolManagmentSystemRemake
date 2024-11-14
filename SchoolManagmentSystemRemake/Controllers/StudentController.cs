@@ -78,6 +78,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 				EducationalLevelId = studentFind.EducationalLevelId,
 				CityId = studentFind.CityId,
 				CourseId = studentFind.CourseId,
+				TeacherId=studentFind.TeacherId,
 				IsDeleted = false
 			};
 			await _context.SaveChangesAsync();
@@ -97,6 +98,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 			studentFind.EducationalLevelId = viewModel.EducationalLevelId;
 			studentFind.CityId = viewModel.CityId;
 			studentFind.CourseId = viewModel.CourseId;
+			studentFind.TeacherId = viewModel.TeacherId;
 			studentFind.IsDeleted = false;
 			_context.SaveChangesAsync();
 			return RedirectToAction("Index");

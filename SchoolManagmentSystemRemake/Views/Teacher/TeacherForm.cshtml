@@ -25,12 +25,15 @@
 
 					<label for="Courses">Courses</label>
 					<div>
-					<select multiple class="form-control" asp-for="SelectedCourseIds"
-							asp-items="@(new SelectList(ViewBag.Courses, "Id", "CourseName"))">
-						<option>
-							---select---
-						</option>
-						</select>
+						@foreach (var course in ViewBag.Courses)
+						{
+							<div class="form-check">
+								<input type="checkbox" class="form-check-input" name="SelectedCourseIds" value="@course.Id"
+								@if(Model!=null)
+								@(Model.SelectedCourseIds.Contains(course.Id) ? "checked" : "") />
+								<label class="form-check-label" for="@course.Id">@course.CourseName</label>
+							</div>
+						}
 					</div>
 
 
