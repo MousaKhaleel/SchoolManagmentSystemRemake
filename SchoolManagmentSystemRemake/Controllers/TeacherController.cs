@@ -16,8 +16,6 @@ namespace SchoolManagmentSystemRemake.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var Teachers = await _context.Teachers.Where(c => !c.IsDeleted).Include(x=>x.Major).ToListAsync();
-			//var Teachers = await _context.Teachers.Include(x => x.City).ToListAsync();
-			//Teachers = await _context.Teachers.Include(x => x.EducationalLevel).ToListAsync();
 			return View("Index", Teachers);
 		}
 
@@ -26,7 +24,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 		{
 			ViewBag.Action = "Create";
 			ViewBag.Majors = _context.Majors.ToList();
-			ViewBag.Courses = _context.Courses.Where(x => !x.IsDeleted).ToList();
+			ViewBag.Courses = await _context.Courses.Where(x => !x.IsDeleted).ToListAsync();
 
 			return View("TeacherForm");
 		}
@@ -44,31 +42,28 @@ namespace SchoolManagmentSystemRemake.Controllers
 			await _context.Teachers.AddAsync(Teacher);
 			await _context.SaveChangesAsync();
 			int generatedId = Teacher.Id;
-
-			List<int> coursesIds = new List<int>();
-			for (int i = 0; i < viewModel.SelectedCourseIds.Count; i++)
-			{
-				coursesIds.Add(viewModel.SelectedCourseIds[i]);
-			}
-			for (int i = 0; i < coursesIds.Count; i++)
-			{
-				var CourseTeacher = new CourseTeacher
+				List<int> coursesIds = new List<int>();
+				for (int i = 0; i < viewModel.SelectedCourseIds.Count; i++)
 				{
-					CourseId = coursesIds[i],
-					TeacherId = generatedId,
-				};
-				await _context.CourseTeachers.AddAsync(CourseTeacher);
-			}
+					coursesIds.Add(viewModel.SelectedCourseIds[i]);
+				}
+				for (int i = 0; i < coursesIds.Count; i++)
+				{
+					var CourseTeacher = new CourseTeacher
+					{
+						CourseId = coursesIds[i],
+						TeacherId = generatedId,
+					};
+					await _context.CourseTeachers.AddAsync(CourseTeacher);
+				}
 
-			await _context.SaveChangesAsync();
-
+				await _context.SaveChangesAsync();
 
 			return RedirectToAction("Index");
 		}
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			//get the std by id ,Teacher
 			var teacherFind = await _context.Teachers.FindAsync(id);
 			vmTeacher teacher = new vmTeacher
 			{
@@ -81,8 +76,7 @@ namespace SchoolManagmentSystemRemake.Controllers
 									.ToList(),
 				IsDeleted = false,
 			};
-			await _context.SaveChangesAsync();
-			//get the std by id ,Teacher
+			//await _context.SaveChangesAsync();
 			ViewBag.Action = "Edit";
 			ViewBag.Majors = _context.Majors.ToList();
 			ViewBag.Courses = _context.Courses.Where(x => !x.IsDeleted).ToList();
@@ -123,11 +117,9 @@ namespace SchoolManagmentSystemRemake.Controllers
 		}
 		public async Task<IActionResult> Delete(int id)
 		{
-			//delete std
 			var teacher = await _context.Teachers.FindAsync(id);
 			teacher.IsDeleted = true;
 			await _context.SaveChangesAsync();
-			//delete std
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> RetrieveDeleted()
@@ -178,15 +170,11 @@ namespace SchoolManagmentSystemRemake.Controllers
 		public IActionResult AssignCourses(vmTeacher viewModel)
 		{
 			var teacherFind = _context.Teachers.Where(x => x.Id == viewModel.Id).FirstOrDefault();
-			//teacherFind.TeacherName = viewModel.TeacherName;
-			//teacherFind.MajorId = viewModel.MajorId;
-			//teacherFind.PricePerHour = viewModel.PricePerHour;
-			//teacherFind.IsDeleted = false;
 			var teacherRecords = _context.CourseTeachers.Where(x => x.TeacherId == teacherFind.Id);
 			_context.CourseTeachers.RemoveRange(teacherRecords);
 			_context.SaveChanges();
 			List<int> coursesIds = new List<int>();
-			for (int i = 0; i < viewModel.SelectedCourseIds.Count; i++)
+			for (int i = 0; i < viewModel.SelectedCourseIds?.Count; i++)
 			{
 				coursesIds.Add(viewModel.SelectedCourseIds[i]);
 			}

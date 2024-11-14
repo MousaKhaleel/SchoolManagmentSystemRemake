@@ -29,6 +29,7 @@
 						{
 							<div class="form-check">
 								<input type="checkbox" class="form-check-input" name="SelectedCourseIds" value="@course.Id"
+								@if(Model!=null)
 								@(Model.SelectedCourseIds.Contains(course.Id) ? "checked" : "") />
 								<label class="form-check-label" for="@course.Id">@course.CourseName</label>
 							</div>

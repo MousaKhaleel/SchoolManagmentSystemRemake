@@ -11,6 +11,7 @@ namespace SchoolManagmentSystemRemake.Models
 
         public string StudentName { get; set; }
 
+        //[Column(TypeName ="date")]
         public DateTime DOB { get; set; }
 
         [ForeignKey(nameof(EducationalLevel))]
@@ -22,6 +23,9 @@ namespace SchoolManagmentSystemRemake.Models
         public int CityId { get; set; }
         public City City { get; set; }
 
+        [ForeignKey(nameof(TeacherId))]
+        public int TeacherId { get; set; }
+        public Teacher Teacher { get; set; }
         public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(Course))]

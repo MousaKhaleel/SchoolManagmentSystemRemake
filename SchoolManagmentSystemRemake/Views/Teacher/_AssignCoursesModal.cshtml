@@ -23,11 +23,11 @@
 		{
 			<div class="form-check">
 				<input type="checkbox" class="form-check-input" name="SelectedCourseIds" value="@course.Id"
-				@(Model.SelectedCourseIds.Contains(course.Id) ? "checked" : "") />
+				@(Model.SelectedCourseIds?.Contains(course.Id) ? "checked" : "") />
 				<label class="form-check-label">@course.CourseName</label>
 			</div>
 		}
-		<button type="submit" class="btn btn-primary mt-3">Save</button>
+			<button type="submit" id="confirmAssign" class="btn btn-primary mt-3">Save</button>
 	</form>
 </div>
 </div>
@@ -38,4 +38,7 @@
 			$('#assignModal').modal('show');
 		});
 	}
+	// document.getElementById('confirmAssign').addEventListener('click', function () {
+	// 	window.location.href = assignUrl;
+	// });
 </script>
