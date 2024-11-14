@@ -16,8 +16,6 @@ namespace SchoolManagmentSystemRemake.Controllers
 		public IActionResult Index()
 		{
 			var Course = _context.Courses.Where(c => !c.IsDeleted).Include(x=>x.Category).ToList();
-			//var Course = await _context.Course.Include(x => x.City).ToListAsync();
-			//Course = await _context.Course.Include(x => x.EducationalLevel).ToListAsync();
 			return View("Index", Course);
 		}
 
@@ -49,7 +47,6 @@ namespace SchoolManagmentSystemRemake.Controllers
 		[HttpGet]
 		public IActionResult Edit(int id)
 		{
-			//get the std by id ,Course
 			var courseFind = _context.Courses.Where(x => x.Id == id).FirstOrDefault();
 			vmCourse course = new vmCourse
 			{
@@ -60,7 +57,6 @@ namespace SchoolManagmentSystemRemake.Controllers
 				Price = courseFind.Price,
 				IsDeleted = false
 			};
-			//get the std by id ,Course
 			ViewBag.Action = "Edit";
 			ViewBag.Categories = _context.Categories.ToList();
 
@@ -77,16 +73,13 @@ namespace SchoolManagmentSystemRemake.Controllers
 				courseFind.Price = viewModel.Price;
 				courseFind.IsDeleted = false;
 			_context.SaveChangesAsync();
-			//get id and fill new info??
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> Delete(int id)
 		{
-			//delete Course
 			var Course = await _context.Courses.FindAsync(id);
 			Course.IsDeleted = true;
 			await _context.SaveChangesAsync();
-			//delete Course
 			return RedirectToAction("Index");
 		}
 		public async Task<IActionResult> RetrieveDeleted()

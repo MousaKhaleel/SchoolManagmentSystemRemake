@@ -11,6 +11,7 @@ namespace SchoolManagmentSystemRemake.Models
 
         public string StudentName { get; set; }
 
+        //[Column(TypeName ="date")]
         public DateTime DOB { get; set; }
 
         [ForeignKey(nameof(EducationalLevel))]

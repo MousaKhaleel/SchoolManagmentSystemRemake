@@ -16,8 +16,6 @@ namespace SchoolManagmentSystemRemake.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var Students = await _context.Students.Where(c => !c.IsDeleted).Include(x=>x.EducationalLevel).Include(y=>y.City).Include(z=>z.Course).Include(t=>t.Teacher).ToListAsync();
-			//var Students = await _context.Students.Include(x => x.City).ToListAsync();
-			//Students = await _context.Students.Include(x => x.EducationalLevel).ToListAsync();
 			ViewBag.Action = "All";
 			return View("Index", Students);
 		}
@@ -68,7 +66,6 @@ namespace SchoolManagmentSystemRemake.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
-			//get the std by id ,Student
 			var studentFind = await _context.Students.FindAsync(id);
 			//var studentFind = _context.Courses.Where(x => x.Id == id).FirstOrDefault();
 			vmStudent student = new vmStudent
@@ -82,7 +79,6 @@ namespace SchoolManagmentSystemRemake.Controllers
 				IsDeleted = false
 			};
 			await _context.SaveChangesAsync();
-			//get the std by id ,Student
 			ViewBag.Action = "Edit";
 			ViewBag.Cities = _context.Cities.ToList();
 			ViewBag.EducationalLevel = _context.educationalLevels.ToList();
